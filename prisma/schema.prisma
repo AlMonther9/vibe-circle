@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder", "postgresqlExtensions"]
+}
+
+
+datasource db {
+    provider = "postgresql"
+    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+    // Further reading:
+    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+    url      = env("DATABASE_URL")
+}
+
+// User model
+model User {
+  id        String  @id @default(uuid())
+  username   String   @unique
+  email      String   @unique
+  password   String
+  bio        String?
+  avatar     String?
+  posts     Post[]
+  reactions      Reaction[]
+  Retweets   Retweet[]
+  comments   Comment[]
+  followers  Follows[] @relation("followers")
+  following  Follows[] @relation("following")
+  createdAt  DateTime @default(now()) @map("created_at")
+  @@map("user")
+  Notification Notification[]
+}
+
+// Post model
+model Post {
+  id         String   @id @default(cuid())
+  content    String   @db.Text              // Text content, can have max 280 chars
+  image      String?                        // Optional image URL
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String @map("user_id")
+  reactions      Reaction[]
+  Retweets   Retweet[]
+  comments   Comment[]
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt
+  @@map("post")
+}
+
+model Reaction {
+    id             Int           @id @default(autoincrement()) // Auto-incrementing primary key
+    entityName     EntityType    @map("entity_name")           // POST or COMMENT
+    reactionType   ReactionType  @map("reaction_type")
+
+    post           Post?         @relation(fields: [referenceId], references: [id], map: "FK__Post") // Optional Post relationship
+    comment        Comment?      @relation(fields: [referenceId], references: [id], map: "FK_Comment") // Optional Comment relationship
+    referenceId    String        @map("reference_id")  // The ID of the post or comment being reacted to
+
+    user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId         String        @map("user_id")   // The user who reacted
+
+    @@index([entityName])
+    @@unique([userId, referenceId, entityName])  // Ensure a user can react only once per post/comment
+    @@map("reaction")
+}
+
+// Enums for reaction types and entity types
+enum ReactionType {
+    LIKE
+    DISLIKE
+    LOVE
+    ANGRY
+    FUNNY
+    SAD
+}
+
+enum EntityType {
+    POST
+    COMMENT
+}
+
+// Retweet model
+model Retweet {
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  Post      Post    @relation(fields: [PostId], references: [id], onDelete: Cascade)
+  PostId    String
+  createdAt  DateTime @default(now()) @map("created_at")
+  @@id([userId, PostId])  // Composite primary key to prevent duplicate Retweets
+  @@map("retweet")
+}
+
+// Follows model
+model Follows {
+  follower   User     @relation("followers", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId String
+  followed   User     @relation("following", fields: [followedId], references: [id], onDelete: Cascade)
+  followedId String
+  createdAt  DateTime @default(now()) @map("created_at")
+  @@id([followerId, followedId])  // Composite primary key to avoid duplicate follows
+  @@map("follows")
+}
+
+// Comment model
+model Comment {
+  id         String   @id @default(cuid())
+  content    String   @db.Text
+  Post      Post    @relation(fields: [PostId], references: [id], onDelete: Cascade)
+  PostId    String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt
+
+  Reaction Reaction[] @relation(map: "FK_Comment")
+  @@map("comment")
+}
+
+model Notification {
+    id Int @id @default(autoincrement())
+    type      NotificationType
+    createdAt DateTime @default(now()) @map("created_at")
+    isRead    Boolean  @default(false) @map("is_read")
+    content   String
+
+    users  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String @map("user_id") 
+
+    @@index([userId])
+    @@map("notifications")
+}
+enum NotificationType {
+  LIKE
+  COMMENT
+  FOLLOW
+  RETWEET
+}
