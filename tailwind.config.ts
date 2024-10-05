@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import tailwindcssAnimate from 'tailwindcss-animate';
 
 const config = {
   darkMode: ['class'],
@@ -20,17 +21,17 @@ const config = {
     extend: {
       colors: {
         skyblue: {
-          '50': '#f4f8fa',
-          '100': '#e6eef3',
-          '200': '#c8d9e6',
-          '300': '#b3ccdd',
-          '400': '#8fb1cb',
-          '500': '#7499bd',
-          '600': '#6283ae',
-          '700': '#56729f',
-          '800': '#4a5f83',
-          '900': '#3f4f69',
-          '950': '#2a3241'
+          50: '#f4f8fa',
+          100: '#e6eef3',
+          200: '#c8d9e6',
+          300: '#b3ccdd',
+          400: '#8fb1cb',
+          500: '#7499bd',
+          600: '#6283ae',
+          700: '#56729f',
+          800: '#4a5f83',
+          900: '#3f4f69',
+          950: '#2a3241'
         },
         cloudy: {
           50: '#f4f6f7',
@@ -58,6 +59,7 @@ const config = {
           900: '#264353',
           950: '#152b37'
         },
+
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -139,7 +141,7 @@ const config = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  plugins: [tailwindcssAnimate]
 } satisfies Config;
 
 export default config;
