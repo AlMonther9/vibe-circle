@@ -32,6 +32,32 @@ const config = {
           '900': '#3f4f69',
           '950': '#2a3241'
         },
+        cloudy: {
+          50: '#f4f6f7',
+          100: '#e2e8eb',
+          200: '#c8d3d9',
+          300: '#a1b4bf',
+          400: '#748e9c',
+          500: '#587382',
+          600: '#4c606e',
+          700: '#42505c',
+          800: '#3b464f',
+          900: '#353d44',
+          950: '#20262c'
+        },
+        calma: {
+          50: '#f0f9fb',
+          100: '#d9f0f4',
+          200: '#c2e5ed',
+          300: '#86cada',
+          400: '#4daac3',
+          500: '#318da9',
+          600: '#2c738e',
+          700: '#295f75',
+          800: '#294f61',
+          900: '#264353',
+          950: '#152b37'
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -73,17 +99,43 @@ const config = {
       },
       keyframes: {
         'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' }
+          from: {
+            height: '0'
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)'
+          }
         },
         'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' }
+          from: {
+            height: 'var(--radix-accordion-content-height)'
+          },
+          to: {
+            height: '0'
+          }
+        },
+        marquee: {
+          from: {
+            transform: 'translateX(0)'
+          },
+          to: {
+            transform: 'translateX(calc(-100% - var(--gap)))'
+          }
+        },
+        'marquee-vertical': {
+          from: {
+            transform: 'translateY(0)'
+          },
+          to: {
+            transform: 'translateY(calc(-100% - var(--gap)))'
+          }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        marquee: 'marquee var(--duration) infinite linear',
+        'marquee-vertical': 'marquee-vertical var(--duration) linear infinite'
       }
     }
   },
