@@ -13,12 +13,29 @@ export default function Home() {
 
   return (
     // <HydrateClient>
-    <main className='flex min-h-screen flex-col items-center justify-center'>
+    <main
+      className='flex min-h-screen flex-col items-center justify-center
+     bg-calma-700 text-white px-56'
+    >
       <h1 className='text-3xl font-bold'>Welcome to Vibes Circle</h1>
       <button className='bg-sky-500 text-white px-4 py-2 mt-4 rounded' onClick={handleSignIn}>
         Join Us
       </button>
-
+      <p className='mb-9 text-3xl'>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus pariatur dicta tempora
+        aperiam facilis. Sequi obcaecati delectus quibusdam nulla nostrum ab, ex architecto deserunt
+        tempore, commodi, minima itaque atque. Quis.
+      </p>
+      <p className='mb-9 text-3xl'>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus pariatur dicta tempora
+        aperiam facilis. Sequi obcaecati delectus quibusdam nulla nostrum ab, ex architecto deserunt
+        tempore, commodi, minima itaque atque. Quis.
+      </p>
+      <p className='mb-9 text-3xl'>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus pariatur dicta tempora
+        aperiam facilis. Sequi obcaecati delectus quibusdam nulla nostrum ab, ex architecto deserunt
+        tempore, commodi, minima itaque atque. Quis.
+      </p>
       {/* Conditionally render the Sign-In popup */}
       {isSignInOpen && <PopUpSignIn handleSignIn={handleSignIn} />}
     </main>
