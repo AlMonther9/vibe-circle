@@ -79,7 +79,7 @@ const PopUpSignIn = ({ handleSignIn }: { handleSignIn: () => void }) => {
   return (
     <div
       className={`fixed inset-0 flex items-center justify-center backdrop-filter
-         bg-cloudy-200/10 backdrop-blur-sm z-50 ${hind.className}`}
+         bg-cloudy-200/20 backdrop-blur-sm z-50 ${hind.className}`}
       onClick={handleSignIn}
     >
       <div
