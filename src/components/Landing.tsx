@@ -7,11 +7,11 @@ const Landing = () => {
     <div className='relative flex flex-col lg:flex-row items-center justify-center min-h-screen p-4 lg:p-8'>
       {/* from-skyblue-600 to-skyblue-950 text-skyblue-100 */}
       {/* Background */}
-      <div className='absolute inset-0 bg-gradient-to-br from-slate-900 via-gray-800 to-indigo-950 opacity-90' />
+      <div className='absolute inset-0 bg-gradient-to-br from-cloudy-950 via-gray-800 to-calma-950 opacity-90' />
       {/* Content */}
       <div className='relative z-10 flex flex-col justify-center items-center lg:items-start space-y-8 lg:w-1/2 max-w-xl lg:pr-8'>
         <header className='text-center lg:text-left'>
-          <h1 className='text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-400 to-indigo-500 leading-tight'>
+          <h1 className='text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-400 to-calma-500 leading-tight'>
             VIBE-CiRCLE
           </h1>
           <p className='text-xl lg:text-2xl mt-4 text-gray-400'>Your voice. Your freedom.</p>
