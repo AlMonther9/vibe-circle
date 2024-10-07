@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Input from '@components/ui/Input';
+import Input from '@/components/ui/Input';
 import { IoMdClose } from 'react-icons/io';
 import { z } from 'zod';
 import { Hind } from 'next/font/google';

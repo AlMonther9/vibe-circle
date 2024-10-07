@@ -100,6 +100,10 @@ const config = {
         sm: 'calc(var(--radius) - 4px)'
       },
       keyframes: {
+        'gradient-x': {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
         'accordion-down': {
           from: {
             height: '0'
@@ -134,6 +138,7 @@ const config = {
         }
       },
       animation: {
+        'gradient-x': 'gradient-x 3s ease infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         marquee: 'marquee var(--duration) infinite linear',

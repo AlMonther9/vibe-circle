@@ -74,75 +74,99 @@ export default function AccountCreationPopup({ isOpen, onClose }: AccountCreatio
   if (!isOpen) return null;
 
   return (
-    <section className='absolute inset-0 flex flex-col justify-between p-24'>
-      <div className='bg-white rounded-lg shadow-lg p-8 w-1/2 max-h-screen place-self-center'>
-        {/* steps */}
-        <nav aria-label='Progress'>
-          <ol role='list' className='space-y-4 md:flex md:space-x-8 md:space-y-0'>
-            {steps.map((step, index) => (
-              <li key={step.name} className='md:flex-1'>
-                {currentStep > index ? (
-                  <div className='group flex w-full flex-col border-l-4 border-sky-600 py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4'>
-                    <span className='text-sm font-medium text-sky-600 transition-colors '>
-                      {step.id}
-                    </span>
-                    <span className='text-sm font-medium'>{step.name}</span>
-                  </div>
-                ) : currentStep === index ? (
-                  <div
-                    className='flex w-full flex-col border-l-4 border-sky-600 py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4'
-                    aria-current='step'
-                  >
-                    <span className='text-sm font-medium text-sky-600'>{step.id}</span>
-                    <span className='text-sm font-medium'>{step.name}</span>
-                  </div>
-                ) : (
-                  <div className='group flex w-full flex-col border-l-4 border-gray-200 py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4'>
-                    <span className='text-sm font-medium text-gray-500 transition-colors'>
-                      {step.id}
-                    </span>
-                    <span className='text-sm font-medium'>{step.name}</span>
-                  </div>
-                )}
-              </li>
-            ))}
-          </ol>
-        </nav>
+    <div className=' inset-0 z-50'>
+      {/* Background blur */}
+      <div className='absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm'></div>
 
-        {/* Form */}
-        <form className='max-h-screen' onSubmit={handleSubmit(processForm)}>
-          <motion.div
-            initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
+      {/* Popup */}
+      <section className='absolute inset-0 flex flex-col justify-between p-24'>
+      <div className='bg-gradient-to-r from-skyblue-400 to-skyblue-900 animate-gradient-x rounded-lg shadow-lg p-8 lg:w-1/2 md:w-1/2 sm:w-full place-self-center relative'>
+
+          <button
+            onClick={onClose}
+            className='absolute top-2 right-2 text-gray-500 hover:text-gray-800'
           >
-            {currentStep === 0 && <PersonalInfoStep register={register} errors={errors} />}
-            {currentStep === 1 && <AddressStep register={register} errors={errors} />}
-            {currentStep === 2 && (
-              <>
-                <h2 className='text-base font-semibold leading-7 text-gray-900'>Complete</h2>
-                <p className='mt-1 text-sm leading-6 text-gray-600'>
-                  Thank you for your submission.
-                </p>
-              </>
-            )}
-          </motion.div>
-        </form>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth='2'
+              stroke='currentColor'
+              className='h-6 w-6'
+            >
+              <path strokeLinecap='round' strokeLinejoin='round' d='M6 18L18 6M6 6l12 12' />
+            </svg>
+          </button>
 
-        {/* Navigation */}
-        <Navigation
-          currentStep={currentStep}
-          totalSteps={steps.length}
-          onPrev={prev}
-          onNext={() => {
-            if (currentStep === steps.length - 1) {
-              onClose();
-            } else {
-              next();
-            }
-          }}
-        />
-      </div>
-    </section>
+          {/* Steps */}
+          <nav aria-label='Progress'>
+            <ol role='list' className='space-y-4 md:flex md:space-x-8 md:space-y-0 pt-2'>
+              {steps.map((step, index) => (
+                <li key={step.name} className='md:flex-1'>
+                  {currentStep > index ? (
+                    <div className='group flex w-full flex-col border-l-4 border-sky-600 py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4'>
+                      <span className='text-sm font-medium text-sky-600 transition-colors '>
+                        {step.id}
+                      </span>
+                      <span className='text-sm font-medium'>{step.name}</span>
+                    </div>
+                  ) : currentStep === index ? (
+                    <div
+                      className='flex w-full flex-col border-l-4 border-sky-600 py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4'
+                      aria-current='step'
+                    >
+                      <span className='text-sm font-medium text-sky-600'>{step.id}</span>
+                      <span className='text-sm font-medium'>{step.name}</span>
+                    </div>
+                  ) : (
+                    <div className='group flex w-full flex-col border-l-4 border-gray-200 py-2 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4'>
+                      <span className='text-sm font-medium text-gray-500 transition-colors'>
+                        {step.id}
+                      </span>
+                      <span className='text-sm font-medium'>{step.name}</span>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+
+          {/* Form */}
+          <form className='max-h-screen' onSubmit={handleSubmit(processForm)}>
+            {/* Animated Form Steps */}
+            <motion.div
+              initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              {currentStep === 0 && <PersonalInfoStep register={register} errors={errors} />}
+              {currentStep === 1 && <AddressStep register={register} errors={errors} />}
+              {currentStep === 2 && (
+                <>
+                  <h2 className='text-base font-semibold leading-7 text-gray-900'>Complete</h2>
+                  <p className='mt-1 text-sm leading-6 text-gray-600'>
+                    Thank you for your submission.
+                  </p>
+                </>
+              )}
+            </motion.div>
+          </form>
+
+          {/* Navigation */}
+          <Navigation
+            currentStep={currentStep}
+            totalSteps={steps.length}
+            onPrev={prev}
+            onNext={() => {
+              if (currentStep === steps.length - 1) {
+                onClose();
+              } else {
+                next();
+              }
+            }}
+          />
+        </div>
+      </section>
+    </div>
   );
 }
